@@ -14,10 +14,11 @@ def parse_page(url):
 
     response = requests.get(url, headers=headers)
     text = response.text
-    titles = re.findall(r'<div\sclass="sons".*?<b>(.*?)</b>', text, re.DOTALL)  # .不能匹配换行符,加re.DOALL 可以匹配所有字符
+    titles = re.findall(r'<div\sclass="sons".*?<b>(.*?)</b>',
+                        text, re.DOTALL)  # .不能匹配换行符,加re.DOALL 可以匹配所有字符 re.DOALL == re.S
     dynasties = re.findall(r'<p class="source".*?<a.*?>(.*?)</a>', text, re.DOTALL)
     authors = re.findall(r'<p class="source".*?<a.*?>.*?<a.*?>(.*?)</a>', text, re.DOTALL)
-    content_tags = re.findall(r'<div class="contson".*?>(.*?)</div>', text, re.DOTALL)
+    content_tags = re.findall(r'<div class="contson".*?>(.*?)</div>', text, re.S)
     contents = []
     for content in content_tags:
         x = re.sub("<.*?>","",content)
